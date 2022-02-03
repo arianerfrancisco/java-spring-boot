@@ -1,8 +1,10 @@
 package com.example.demo.domain;
 
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Service // agora essa classe pode ser invocada por outra classe através da injeção @Autowired
 public class CarroService {
  public List<Carro> getCarros(){
      List<Carro> carros = new ArrayList<>();
