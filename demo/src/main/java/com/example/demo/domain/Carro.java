@@ -11,6 +11,15 @@ public class Carro {
     private Long id;
     // caso o nome da coluna fosse direrente do nome desse atributo precisa ser mapeado:@Column(name="nomeDaColuna")
     private String nome;
+    private String tipo;
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
     public Carro() {
     }
