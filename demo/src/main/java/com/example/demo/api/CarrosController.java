@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import com.example.demo.domain.Carro;
 import com.example.demo.domain.CarroService;
+import com.example.demo.domain.dto.CarroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,16 @@ public class CarrosController {
     // não sendo necessiario ser instanciada com new CarroService();
     private CarroService service;
 
-    @GetMapping()
-    public ResponseEntity<Iterable<Carro>> get(){
+    /*@GetMapping()
+    public ResponseEntity<List<CarroDTO>> get(){
         // retorno codigo 200 salvamento concluido com sucesso
         return  ResponseEntity.ok(service.getCarros());
         // ou na segunte sintaxe >>>> return new ResponseEntity<>( service.getCarros(), HttpStatus.OK);
+    }*/
+    @GetMapping()
+    public ResponseEntity get() {
+        List<CarroDTO> carros = service.getCarros();
+        return ResponseEntity.ok(carros);
     }
 
     @GetMapping("/{id}")
@@ -49,8 +55,8 @@ public class CarrosController {
     @GetMapping("tipo/{tipo}")
     // http://localhost:8080/api/v1/carros/(insere o tipo: luxuoso, esportivo ou clássico)
     // exemplo>>> http://localhost:8080/api/v1/carros/tipo/esportivos
-    public ResponseEntity getCarrosByTipo(@PathVariable("tipo") String tipo){
-        List<Carro> carros = service.getCarroByTipo(tipo);
+    public ResponseEntity<List<CarroDTO>> getCarrosByTipo(@PathVariable("tipo") String tipo){
+        List<CarroDTO> carros = service.getCarroByTipo(tipo);
         return carros.isEmpty() ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.ok(carros);

@@ -7,7 +7,8 @@ import javax.persistence.*;
 @Entity // mapeamento com a tabela carro do banco de dados, coso o nome dessa classe fosse diferente
 // do nome da tabela, precisaria ser da seguinte forma: @Entity(name="nomeDaTabela")
 // @Getter @Setter @ToString @EqualsAndHashCode pode ser substituidos por @Data
-@Getter @Setter
+@Data
+@NoArgsConstructor
 public class Carro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,12 +18,6 @@ public class Carro {
     private String nome;
     private String tipo;
 
-    public Carro() {
-    }
 
-    public Carro(Long id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
 
 }
