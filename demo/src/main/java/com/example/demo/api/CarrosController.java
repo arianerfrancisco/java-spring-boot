@@ -3,10 +3,9 @@ package com.example.demo.api;
 import com.example.demo.domain.Carro;
 import com.example.demo.domain.CarroService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +20,9 @@ public class CarrosController {
     private CarroService service;
 
     @GetMapping()
-    public Iterable<Carro> get(){
-        return service.getCarros();
+    public ResponseEntity<Iterable<Carro>> get(){
+        return  ResponseEntity.ok(service.getCarros());
+        // ou na segunte sintaxe >>>> return new ResponseEntity<>( service.getCarros(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -38,5 +38,23 @@ public class CarrosController {
     public Iterable<Carro> getCarrosByTipo(@PathVariable("tipo") String tipo){
         return service.getCarroByTipo(tipo);
     }
+    @PostMapping
+    public String post(@RequestBody Carro carro) {
+        // http://localhost:8080/api/v1/carros
+        Carro c = service.insert(carro);
+        return "Carro salvo com sucesso" + c.getId();
+    }
 
+    // atualizar um carro a partir do id passado na url
+    // http://localhost:8080/api/v1/carros/'aqui coloca o id'
+    @PutMapping("/{id}")
+    public String put(@PathVariable("id") Long id, @RequestBody Carro carro ){
+        Carro c = service.update(carro, id);
+        return "Carro atualizado com sucesso" + c.getId();
+    }
+@DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        service.delete(id);
+        return "Carro deletado com sucesso";
+}
 }
