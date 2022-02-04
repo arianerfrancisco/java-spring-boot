@@ -21,15 +21,29 @@ public class CarrosController {
 
     @GetMapping()
     public ResponseEntity<Iterable<Carro>> get(){
+        // retorno codigo 200 salvamento concluido com sucesso
         return  ResponseEntity.ok(service.getCarros());
         // ou na segunte sintaxe >>>> return new ResponseEntity<>( service.getCarros(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     // url: http://localhost:8080/api/v1/carros/(insere aqui o id)
-    public Optional<Carro> get(@PathVariable("id") Long id){ // caso não tenha um carro correspondente ao id
-        // o optional retorna null.
-        return service.getCarroById(id);
+    public ResponseEntity get(@PathVariable("id") Long id){ // caso não tenha um carro correspondente ao id
+       Optional<Carro> carro = service.getCarroById(id); // o optional retorna null.
+        // Algumas formas de implementar o condicional
+        // --com lambda
+       //  return carro.map( c ->  ResponseEntity.ok(c)), que pode ser escrito da maneira abaixo
+        return carro
+                .map(ResponseEntity::ok) // se existir ele retorna ok - código 200
+                .orElse(ResponseEntity.notFound().build());
+        // ----------- ternario ----------
+        //return carro.isPresent() ? ResponseEntity.ok(carro.get()) : ResponseEntity.notFound().build();
+        // --------- condicional if-else
+       /** if(carro.isPresent()){
+           return ResponseEntity.ok(carro.get());
+       } else {
+           return ResponseEntity.notFound().build();
+       } **/
     }
 
     @GetMapping("tipo/{tipo}")
