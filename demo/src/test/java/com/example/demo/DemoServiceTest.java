@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.domain.Carro;
+import com.example.demo.domain.CarroRepository;
 import com.example.demo.domain.CarroService;
 import com.example.demo.domain.dto.CarroDTO;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // NA METODOLOGIA TDD - ESCREVE-SE O TESTE ANTES DA LÓGICA
 @SpringBootTest
-class DemoApplicationTests {
+class DemoServiceTest {
     @Autowired // Serve para injetar a classe abaixo.
     private CarroService service;
 
@@ -42,6 +43,18 @@ class DemoApplicationTests {
     @Test
     void testLista() {
 		List<CarroDTO> carros = service.getCarros();
-
+        assertEquals(30, carros.size());
 	}
+    @Test
+    void testListaPorTipo() {
+     //   List<CarroDTO> carros = service.getCarroByTipo("esportivos");
+        assertEquals(10, service.getCarroByTipo("esportivos").size());// analisar sobre ids
+    }
+    @Test
+    void testGet() {
+        Optional<CarroDTO> op = service.getCarroById(11L); // analisar sobre ids
+        assertTrue(op.isPresent());
+        CarroDTO c = op.get();
+        assertEquals("Ferrari FF", c.getNome());
+    }
 }

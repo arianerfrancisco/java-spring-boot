@@ -17,6 +17,13 @@ public class Carro {
     // caso o nome da coluna fosse direrente do nome desse atributo precisa ser mapeado:@Column(name="nomeDaColuna")
     private String nome;
     private String tipo;
+   /* private String descricao;
+    private String urlFoto; // no bd está como url_foto, mas o Hibernate consegue interpretar como urlFoto também
+    private String urlVideo;
+    private String latitude;
+    private String longitude; */
+
+
 
 
 

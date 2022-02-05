@@ -57,7 +57,7 @@ public class CarrosController {
     @GetMapping("tipo/{tipo}")
     // http://localhost:8080/api/v1/carros/(insere o tipo: luxuoso, esportivo ou clássico)
     // exemplo>>> http://localhost:8080/api/v1/carros/tipo/esportivos
-    public ResponseEntity<List<CarroDTO>> getCarrosByTipo(@PathVariable("tipo") String tipo){
+    public ResponseEntity getCarrosByTipo(@PathVariable("tipo") String tipo){
         List<CarroDTO> carros = service.getCarroByTipo(tipo);
         return carros.isEmpty() ?
                 ResponseEntity.noContent().build() :
