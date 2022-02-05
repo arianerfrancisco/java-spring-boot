@@ -2,6 +2,7 @@ package com.example.demo.domain.dto;
 
 import com.example.demo.domain.Carro;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 
 @Data
 public class CarroDTO {
@@ -9,10 +10,8 @@ public class CarroDTO {
     private String nome;
     private String tipo;
 
-    public CarroDTO(Carro carro) {
-        this.id = carro.getId();
-        this.nome = carro.getNome();
-        this.tipo = carro.getTipo();
+    public static CarroDTO create(Carro carro) { // converte Carro para CarroDTO
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(carro, CarroDTO.class);
     }
-
 }
