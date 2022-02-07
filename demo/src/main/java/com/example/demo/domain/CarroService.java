@@ -7,6 +7,7 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import com.example.demo.api.exception.ObjectNotFoundException;
 
 @Service // agora essa classe pode ser invocada por outra classe através da injeção @Autowired
 public class CarroService {
@@ -18,8 +19,9 @@ public class CarroService {
       return list;
     }
 
-    public Optional<CarroDTO> getCarroById(Long id) {
-        return rep.findById(id).map(CarroDTO::create);
+    public CarroDTO getCarroById(Long id) {
+        return rep.findById(id).map(CarroDTO::create)
+                .orElseThrow(() -> new ObjectNotFoundException("Carro não encontrado"));
     }
 
     public List<CarroDTO> getCarroByTipo(String tipo) {

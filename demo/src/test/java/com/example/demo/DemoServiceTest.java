@@ -1,7 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.api.exception.ObjectNotFoundException;
 import com.example.demo.domain.Carro;
-import com.example.demo.domain.CarroRepository;
 import com.example.demo.domain.CarroService;
 import com.example.demo.domain.dto.CarroDTO;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,15 +29,20 @@ class DemoServiceTest {
         Long id = c.getId();
         assertNotNull(id);
         // Buscar o Objeto
-        Optional<CarroDTO> op = service.getCarroById(id);
-        assertTrue(op.isPresent());
-        c = op.get(); // Confirmar se os dados deletados foram os passados para cancelamento
+        c = service.getCarroById(id);
+        assertNotNull(c);
         assertEquals("Ferrari", c.getNome());
         assertEquals("esportivos", c.getTipo());
         //Deletar o objeto após os testes
         service.delete(id);
         // verificar se deletou
-        assertFalse(service.getCarroById(id).isPresent());
+        try {
+            assertNotNull(service.getCarroById(id));
+            fail("O carro não foi excluido");
+        } catch (ObjectNotFoundException e) {
+            //ok
+        }
+
     }
 
     @Test
@@ -52,9 +57,8 @@ class DemoServiceTest {
     }
     @Test
     void testGet() {
-        Optional<CarroDTO> op = service.getCarroById(11L); // analisar sobre ids
-        assertTrue(op.isPresent());
-        CarroDTO c = op.get();
+        CarroDTO c = service.getCarroById(11L); // analisar sobre ids
+        assertNotNull(c);
         assertEquals("Ferrari FF", c.getNome());
     }
 }
