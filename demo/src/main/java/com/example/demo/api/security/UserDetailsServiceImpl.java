@@ -17,15 +17,10 @@ public class UserDetailsServiceImpl  implements UserDetailsService {
 
     @Override // cria-se todos os usuários necessários
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-      User user = userRep.findByLogin(username); // especificar o package, já que
-        // já tem o import import com.example.demo.domain.UserRepository;
+      User user = userRep.findByLogin(username);
         if(user == null){
             throw new UsernameNotFoundException("user not found");
         }
-        // return User.withUsername(username).password(encoder.encode("admin")).roles("USER", "ADMIN").build(); não precisa mais do encoder, pois já está salvo neste formato no BD
-     //   return User.withUsername(username).password(user.getSenha()).roles("USER").build();
-        // retornar dinamicamente usuario no BD
-        return
+        return user;
     }
 }
