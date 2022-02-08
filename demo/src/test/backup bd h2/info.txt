@@ -1,0 +1,2 @@
+estes arquivos devem ser colocados na pasta ressources de test, assim prevalecerá a config do banco
+H2. Na ausência dele, assumirá o BD padrão da API
