@@ -5,6 +5,7 @@ import com.example.demo.domain.CarroService;
 import com.example.demo.domain.dto.CarroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -52,6 +53,7 @@ public class CarrosController {
     }
 
     @PostMapping
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity post(@RequestBody Carro carro) {
         // http://localhost:8080/api/v1/carros
         // para inserir um novo carro não deve-se inserir o id

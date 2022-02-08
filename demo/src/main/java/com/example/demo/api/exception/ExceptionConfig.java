@@ -2,7 +2,9 @@ package com.example.demo.api.exception;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -28,4 +30,18 @@ public class ExceptionConfig extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().build();
     }
 
+    @ExceptionHandler({ // método para tratar usuário não permitido para realizar determinado método
+            AccessDeniedException.class
+    })
+    public ResponseEntity accessDenied() {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Error("Acesso negado"));
+    }
+}
+
+class Error {
+    public String error;
+
+    public Error(String error) {
+        this.error = error;
+    }
 }
