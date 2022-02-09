@@ -1,5 +1,4 @@
-package com.carros.api.security.jwt;
-
+package com.example.demo.api.security.jwt;
 import com.carros.domain.User;
 import com.carros.domain.dto.UserDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -73,5 +72,3 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 
 }
-
-

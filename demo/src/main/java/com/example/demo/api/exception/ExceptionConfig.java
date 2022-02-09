@@ -1,4 +1,4 @@
-package com.example.demo.api.exception;
+package com.example.demo.api.security.jwt;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
